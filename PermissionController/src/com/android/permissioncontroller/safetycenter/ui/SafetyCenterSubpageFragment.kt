@@ -16,11 +16,14 @@
 
 package com.android.permissioncontroller.safetycenter.ui
 
+import android.content.Intent
 import android.os.Build.VERSION_CODES.UPSIDE_DOWN_CAKE
 import android.os.Bundle
+import android.os.UserHandle
 import android.safetycenter.SafetyCenterEntryGroup
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.preference.Preference
 import androidx.preference.PreferenceGroup
 import com.android.permissioncontroller.Constants.EXTRA_SESSION_ID
 import com.android.permissioncontroller.R
@@ -188,6 +191,18 @@ class SafetyCenterSubpageFragment : SafetyCenterFragment() {
                 )
             )
         }
+        if (sourceGroupId == LOCK_SCREEN_SOURCES_GROUP_ID &&
+            UserHandle.myUserId() == SYSTEM_USER_ID
+        ) {
+            subpageEntryGroup.addPreference(
+                Preference(requireContext()).apply {
+                    key = DURESS_PASSWORD_KEY
+                    setTitle(R.string.duress_password_title)
+                    setSummary(R.string.duress_password_summary)
+                    intent = Intent(DURESS_PASSWORD_SETTINGS_ACTION)
+                }
+            )
+        }
     }
 
     companion object {
@@ -200,6 +215,11 @@ class SafetyCenterSubpageFragment : SafetyCenterFragment() {
         private const val FOOTER_KEY = "subpage_footer"
         private const val SPACER_KEY = "subpage_spacer"
         private const val SOURCE_GROUP_ID_KEY = "source_group_id"
+        private const val SYSTEM_USER_ID = 0
+        private const val LOCK_SCREEN_SOURCES_GROUP_ID = "AndroidLockScreenSources"
+        private const val DURESS_PASSWORD_KEY = "duress_password"
+        private const val DURESS_PASSWORD_SETTINGS_ACTION =
+            "com.android.settings.DURESS_PASSWORD_SETTINGS"
 
         /** Creates an instance of SafetyCenterSubpageFragment with the arguments set */
         @JvmStatic

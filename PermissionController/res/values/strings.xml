@@ -15,6 +15,9 @@
 -->
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="duress_password_title">Duress PIN and password</string>
+    <string name="duress_password_summary">Configure emergency credentials that permanently wipe device data</string>
+
     <!-- [CHAR LIMIT=60] -->
     <string name="app_name">Permission controller</string>
 
